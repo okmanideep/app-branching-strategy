@@ -5,7 +5,7 @@ on:
     types:
       - closed
     branches:
-      - 'release*'
+      - 'release/**'
 env:
   BASE_BRANCH: ${{ github.base_ref }} # release branch
   PR_NUMBER: ${{ github.event.pull_request.number }}
