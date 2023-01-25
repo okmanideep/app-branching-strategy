@@ -1,6 +1,6 @@
 # Automatically raise a PR with the changes merged into release branch to master branch
 on:
-  pull_request_target:
+  pull_request:
     types:
       - closed
     branches:
