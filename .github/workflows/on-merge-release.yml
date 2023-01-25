@@ -1,6 +1,6 @@
 # Automatically raise a PR with the changes merged into release branch to master branch
 on:
-  pull_request_target:
+  pull_request:
     types:
       - closed
     branches:
@@ -11,7 +11,7 @@ env:
   TZ: +05:30
 
 jobs:
-  raise-backmerge-pr:
+  raise-backmerge-pr-and-bump-version:
     if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     steps:
