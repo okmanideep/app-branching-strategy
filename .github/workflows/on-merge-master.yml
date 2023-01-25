@@ -1,4 +1,4 @@
-name: Update version on master change
+name: Update version on merge to master
 
 on:
   pull_request:
@@ -29,7 +29,4 @@ jobs:
       uses: stefanzweifel/git-auto-commit-action@v4
       with:
         commit_message: "[Bot] Bump version"
-        commit_user_name: Gitbot
-        commit_user_email: gitbot@okmanideep.me
-        commit_author: Gitbot <gitbot@okmanideep.me>
         branch: ${{ github.base_ref }}
