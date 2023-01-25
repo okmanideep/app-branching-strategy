@@ -25,7 +25,7 @@ jobs:
       - name: Create PR from a backmerge branch
         run: |
           git switch -c "backmerge-from-release-to-master/$PR_NUMBER"
-          gh pr create --title "Backmerge #$PR_NUMBER" --body "Backmerge from release to master" --base master --label "backmerge" --label "automated"
+          gh pr create --title "Backmerge #$PR_NUMBER" --body "Backmerge from release to master" --base master --head --label "backmerge" --label "automated"
 
       - name: Checkout to release branch
         run: |
