@@ -9,7 +9,8 @@ env:
   TZ: +05:30
 
 jobs:
-  build:
+  if: ${{ github.event.head_commit.committer.email != 'gitbot@okmanideep.me' }}
+  bump-version:
     runs-on: ubuntu-latest
 
     steps:
@@ -18,16 +19,12 @@ jobs:
       with:
         token: ${{secrets.AUTOMATION_TOKEN}}
 
-    - name: Get commit author email
-      run: |
-        author_email=$(git log -1 --pretty=format:'%ae')
-        echo "Author email: $author_email"
-
-    - name: Run script
-      if: |
-        ! contains(toJsonString(steps.get_commit_author_email.outputs.stdout), 'gitbot@okmanideep.me')
+    - name: Run Update Version Script
       run: |
         ruby scripts/update_version.rb ./version.txt
+
+    - name: Commit and push
+      run: |
         git add version.txt
         git commit -m "Update Version on master" --author "Gitbot <gitbot@okmanideep.me>"
         git push origin master
