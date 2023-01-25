@@ -26,6 +26,8 @@ jobs:
 
     - name: Commit and push
       run: |
+        git config --global user.name "Gitbot"
+        git config --global user.email "gitbot@okmanideep.me"
         git add version.txt
         git commit -m "Update Version on master" --author "Gitbot <gitbot@okmanideep.me>"
         git push origin master
