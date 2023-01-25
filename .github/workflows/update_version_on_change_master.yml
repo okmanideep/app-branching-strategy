@@ -25,9 +25,9 @@ jobs:
         ruby scripts/update_version.rb ./version.txt
 
     - name: Commit and push
-      run: |
-        git config --global user.name "Gitbot"
-        git config --global user.email "gitbot@okmanideep.me"
-        git add version.txt
-        git commit -m "Update Version on master" --author "Gitbot <gitbot@okmanideep.me>"
-        git push origin master
+      uses: stefanzweifel/git-auto-commit-action@v4
+      with:
+        commit_message: "[Bot] Bump version"
+        commit_user_name: Gitbot
+        commit_user_email: gitbot@okmanideep.me
+        commit_author: Gitbot <gitbot@okmanideep.me>
