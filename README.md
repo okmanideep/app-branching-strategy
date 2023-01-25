@@ -103,6 +103,8 @@ gitGraph
 
 ## Automated Workflows
 ### Update Full Version on `master`
+`.github/workflows/update_version_on_master_change`
+
 On every commit we update the full version. Major, minor versions will be modified if the existing version is of a previous date, otherwise only the patch number will be increased.
 
 **Example**:  
