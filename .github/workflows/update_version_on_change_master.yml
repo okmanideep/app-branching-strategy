@@ -1,7 +1,9 @@
 name: Update version on master change
 
 on:
-  push:
+  pull_request:
+    types:
+      - closed
     branches:
       - master
 
@@ -10,13 +12,14 @@ env:
 
 jobs:
   bump-version:
+    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
 
     steps:
     - name: Checkout code
       uses: actions/checkout@v3
       with:
-        token: ${{secrets.AUTOMATION_TOKEN}}
+        ref: ${{ github.head_ref }}
 
     - name: Run Update Version Script
       run: |
