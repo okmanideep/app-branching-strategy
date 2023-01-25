@@ -1,0 +1,30 @@
+name: Update version on master change
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+      with:
+        token: ${{secrets.AUTOMATION_TOKEN}}
+
+    - name: Get commit author email
+      run: |
+        author_email=$(git log -1 --pretty=format:'%ae')
+        echo "Author email: $author_email"
+
+    - name: Run script
+      if: |
+        ! contains(toJsonString(steps.get_commit_author_email.outputs.stdout), 'gitbot@okmanideep.me')
+      run: |
+        ruby scripts/update_version.rb ./version.txt
+        git add version.txt
+        git commit -m "Update Version on master" --author "Gitbot <gitbot@okmanideep.me>"
+        git push origin master
