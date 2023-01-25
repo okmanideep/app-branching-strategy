@@ -115,4 +115,3 @@ On every commit we update the patch number on `release*` branches
 
 ### Backmerge pushes into `release*` onto `master`
 Every push to `release*` will trigger a corresponding PR to `master` via a `backmerge/<pr_number>` branch
-
