@@ -27,7 +27,7 @@ jobs:
           git switch -c "backmerge-from-release-to-master/$PR_NUMBER"
           git push origin HEAD
           gh pr create --title "Backmerge #$PR_NUMBER" --body "Backmerge from release to master" --base master
-          gh pr merge --auto
+          gh pr merge --auto --squash
 
       - name: Checkout to release branch
         run: |
