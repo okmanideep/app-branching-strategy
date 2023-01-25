@@ -1,0 +1,40 @@
+# Automatically raise a PR with the changes merged into release branch to master branch
+on:
+  pull_request_target:
+    types:
+      - closed
+    branches:
+      - release*
+env:
+  BASE_BRANCH: ${{ github.base_ref }} # release branch
+  PR_NUMBER: ${{ github.event.pull_request.number }}
+  TZ: +05:30
+
+jobs:
+  raise-backmerge-pr:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.base_ref }}
+
+      - name: Create PR from a backmerge branch
+        run: |
+          git switch -c "backmerge-from-release-to-master/$PR_NUMBER"
+          gh pr create --title "Backmerge #$PR_NUMBER" --body "Backmerge from release to master" --base master --label "backmerge" --label "automated"
+
+      - name: Checkout to release branch
+        run: |
+          git switch $BASE_BRANCH
+
+      - name: Run Update Version Script
+        run: |
+          ruby scripts/update_version.rb ./version.txt --only-patch
+
+      - name: Commit and push
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: "[Bot] Bump version"
+          branch: ${{ github.base_ref }}
