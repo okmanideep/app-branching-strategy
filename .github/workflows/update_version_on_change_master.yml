@@ -1,9 +1,7 @@
 name: Update version on master change
 
 on:
-  pull_request_target:
-    types:
-      - closed
+  push:
     branches:
       - master
 
