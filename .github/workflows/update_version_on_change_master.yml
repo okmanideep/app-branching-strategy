@@ -19,7 +19,7 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
       with:
-        ref: ${{ github.head_ref }}
+        ref: ${{ github.base_ref }}
 
     - name: Run Update Version Script
       run: |
@@ -32,4 +32,4 @@ jobs:
         commit_user_name: Gitbot
         commit_user_email: gitbot@okmanideep.me
         commit_author: Gitbot <gitbot@okmanideep.me>
-        branch: ${{ github.head_ref }}
+        branch: ${{ github.base_ref }}
