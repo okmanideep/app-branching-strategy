@@ -4,19 +4,19 @@ on: workflow_dispatch
 
 jobs:
   create-release-branch:
-  runs-on: ubuntu-latest
-  steps:
-    - name: Checkout master
-      uses: actions/checkout@v3
-      with:
-        ref: master
-    - name: Get Version
-      id: version
-      run: |
-        echo "VERSION=$(ruby ./scripts/print_version.rb ./version.txt --exclude-patch)" >> $GITHUB_OUTPUT
-    - name: Create a release branch
-      env:
-        VERSION: ${{ steps.version.outputs.VERSION }}
-      run: |
-        git switch -c "release/v-$VERSION"
-        git push origin HEAD
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout master
+        uses: actions/checkout@v3
+        with:
+          ref: master
+      - name: Get Version
+        id: version
+        run: |
+          echo "VERSION=$(ruby ./scripts/print_version.rb ./version.txt --exclude-patch)" >> $GITHUB_OUTPUT
+      - name: Create a release branch
+        env:
+          VERSION: ${{ steps.version.outputs.VERSION }}
+        run: |
+          git switch -c "release/v-$VERSION"
+          git push origin HEAD
