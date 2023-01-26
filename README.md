@@ -28,13 +28,13 @@ gitGraph
 	commit id: "Add DB"
 	commit id: "Add Socket"
 	checkout master
-	merge fix/frames-bug tag: "PR: Fix Frames Bug"
+	merge fix/frames-bug id: "PR: Frames Bug"
 	commit id: "🤖 2301.25.1"
 	checkout feature/dm
-	merge master tag: "Regular Pull from master"
+	merge master id: "Pull master"
 	commit id: "Add UI"
 	checkout master
-	merge feature/dm tag: "PR: Feature DM"
+	merge feature/dm id: "PR: Feature DM"
 	commit id: "🤖 2301.25.2"
 ```
 
@@ -109,6 +109,7 @@ gitGraph
 
 ## Automated Workflows
 ### Update Full Version on `master`
+✅
 On every merge to master we update the full version. Major, minor versions will be modified if the existing version is of a previous date, otherwise only the patch number will be increased.
 
 **Example**:  
@@ -117,7 +118,16 @@ If a new commit is pushed on 25th Jan, 2023, the version becomes `2301.25.3`
 If a new commit is pushed on 26th Jan, 2023, the version becomes `2301.26.0`
 
 ### Update Patch Number on `release*`
+✅
 On every commit we update the patch number on `release*` branches
 
 ### Backmerge pushes into `release*` onto `master`
-Every push to `release*` will trigger a corresponding PR to `master` via a `backmerge/<pr_number>` branch
+✅
+Every push to `release*` will trigger a corresponding PR to `master` via a `auto-backmerge/<pr_number>` branch. The PR will be automatically merged if there are no conflicts
+
+## Manually triggered workflows
+### Prepare a new release
+Create a release branch from latest master, with the right version in the branch name
+
+### Tag Release
+Tag the latest commit in a release branch with the right version tag
