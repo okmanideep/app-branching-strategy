@@ -1,3 +1,5 @@
+AllCops:
+  TargetRubyVersion: 2.7
 Metrics/MethodLength:
   Max: 100
 Metrics/AbcSize:
