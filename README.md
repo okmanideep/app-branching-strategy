@@ -12,15 +12,14 @@ No other permanent trunks.
 * `release/v-<version.major>.<version.minor>` 
 	* Temporary branch that lives while a release is being _prepared_
 	* No patch number in branch name because patch number is subject to change as fixes are merged after Testing
-* `backmerge/<pr_number>`
-	* Used to raise PRs to master for every change pushed to release branches
+* `auto-backmerge/<pr_number>` Used to raise PRs to master for every change pushed to release branches
 
 ## Feature Development and Bug Fixing
 ```mermaid
 %%{init: { 'gitGraph': {'mainBranchName': 'master', 'showCommitLabel': true}} }%%
 
 gitGraph
-	commit id: "base"
+	commit id: "🤖 2301.25.0"
 	branch fix/frames-bug
 	commit id: "Fix Logic"
 	commit id: "Fix UI"
@@ -29,12 +28,14 @@ gitGraph
 	commit id: "Add DB"
 	commit id: "Add Socket"
 	checkout master
-	merge fix/frames-bug tag: "Fix Frames Bug"
+	merge fix/frames-bug tag: "PR: Fix Frames Bug"
+	commit id: "🤖 2301.25.1"
 	checkout feature/dm
 	merge master tag: "Regular Pull from master"
 	commit id: "Add UI"
 	checkout master
-	merge feature/dm tag: "Feature DM"
+	merge feature/dm tag: "PR: Feature DM"
+	commit id: "🤖 2301.25.2"
 ```
 
 ## Versioning Schema
@@ -58,19 +59,25 @@ Yes. It's a date based versioning scheme that is
 %%{init: { 'gitGraph': {'mainBranchName': 'master', 'showCommitLabel': true}} }%%
 
 gitGraph
-	commit id: "latest master"
-	branch release/v-2301.25 order:3
-	commit id: "some fixes"
-	branch fix/release-bug order:2
-	commit id: "Fix bug"
+	commit id: "🤖 2301.25.2"
+	branch release/v-2301.25
 	checkout master
-	commit id: "New feature"
+	commit id: "PR: New Feature" type:HIGHLIGHT
+	commit id: "🤖 2301.26.0"
 	checkout release/v-2301.25
-	merge fix/release-bug tag: "v-2301.25.1"
-	checkout fix/release-bug
-	merge master tag: "Update with master"
+	branch fix/release-bug
+	commit id: "Fix bug"
+	checkout release/v-2301.25
+	merge fix/release-bug id: "PR: Release bug"
+	checkout release/v-2301.25
+	branch auto-backmerge/release-bug
+	merge master id: "Update branch"
+	checkout release/v-2301.25
+	commit id: "🤖 2301.25.3" tag: "v-2301.25.3"
 	checkout master
-	merge fix/release-bug tag: "Fix in master" type: REVERSE
+	merge auto-backmerge/release-bug id: "backmerge"
+	checkout master
+	commit id: "🤖 2301.26.1"
 ```
 
 ### Hotfix
@@ -83,22 +90,21 @@ Fixing an issue in current production build (`v-2301.16.1`)
 > Note: The second PR from `hotfix` branch to `master` will be automated
 
 ```mermaid
-%%{init: { 'gitGraph': {'mainBranchName': 'master', 'showCommitLabel': true}} }%%
+%%{init: { 'gitGraph': {'mainBranchName': 'release/v-2301.16', 'showCommitLabel': true}} }%%
 
 gitGraph
-	commit id: "Prepare v-2301.16.0"
-	branch release/v-2301.16
-	commit id: "v-2301.16.1"
+	commit id: "2301.16.4" tag: "v-2301.16.4"
 	branch hotfix/crash
 	commit id: "Fix crash"
-	checkout master
-	commit id: "New feature"
 	checkout release/v-2301.16
-	merge hotfix/crash tag: "v-2301.16.2"
-	checkout hotfix/crash
-	merge master tag: "Update with master"
-	checkout master
-	merge hotfix/crash tag: "Fix in master" type: REVERSE
+	merge hotfix/crash id: "PR Crash"
+	commit id: "🤖 2301.16.5"
+	branch hotfix/bug
+	commit id: "Fix bug"
+	checkout release/v-2301.16
+	merge hotfix/bug id: "PR Bug"
+	commit id: "🤖 2301.16.6" tag: "v-2301.16.6"
+
 ```
 
 ## Automated Workflows
