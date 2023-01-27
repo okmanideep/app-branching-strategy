@@ -108,26 +108,33 @@ gitGraph
 ```
 
 ## Automated Workflows
-### Update Full Version on `master`
-✅
+### On PR merge to `master`
+🤖 [on-merge-master.yml](./.github/workflows/on-merge-master.yml)
 On every merge to master we update the full version. Major, minor versions will be modified if the existing version is of a previous date, otherwise only the patch number will be increased.
 
 **Example**:  
-Existing Version: `2301.25.2`
-If a new commit is pushed on 25th Jan, 2023, the version becomes `2301.25.3`
-If a new commit is pushed on 26th Jan, 2023, the version becomes `2301.26.0`
+Existing Version: `2301.25.2`  
+If a new commit is pushed on 25th Jan, 2023, the version becomes `2301.25.3`  
+If a new commit is pushed on 26th Jan, 2023, the version becomes `2301.26.0`  
 
-### Update Patch Number on `release*`
-✅
+### On PR merge to `release/**`
+🤖 [on-merge-release.yml](./.github/workflows/on-merge-release.yml)
+#### Update Patch Number on `release*`
 On every commit we update the patch number on `release*` branches
 
-### Backmerge pushes into `release*` onto `master`
-✅
-Every push to `release*` will trigger a corresponding PR to `master` via a `auto-backmerge/<pr_number>` branch. The PR will be automatically merged if there are no conflicts
+#### Backmerge pushes into `release/**` onto `master`
+🤖 [on-merge-release.yml](./.github/workflows/on-merge-release.yml)
+Every push to `release*` will trigger a corresponding PR to `master` via a `auto-backmerge/<pr_number>` branch. 
+
+> The PR will be automatically merged if there are no conflicts
 
 ## Manually triggered workflows
 ### Prepare a new release
-Create a release branch from latest master, with the right version in the branch name
+🤖 [prepare-a-release.yml](./.github/workflows/prepare-a-release.yml)
+Create a release branch from latest master, with the right version in the branch name.
+
+Actions ▶️ > Prepare a release > Run workflow
 
 ### Tag Release
 Tag the latest commit in a release branch with the right version tag
+
