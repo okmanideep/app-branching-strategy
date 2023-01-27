@@ -1,6 +1,6 @@
 # Branching Strategy for Mobile Apps
 
-[Understand The Why s 🤔](#the-why-s)
+[Understand The Why s 🤔](#the-why-s-)
 
 ## Repository Settings ⚙️
 * [Only allow Squash Merges](https://egghead.io/lessons/github-automatically-squash-commits-on-github-when-merging-pull-requests)
