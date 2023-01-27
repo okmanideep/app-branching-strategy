@@ -5,6 +5,9 @@
 ## Repository Settings ⚙️
 * [Only allow Squash Merges](https://egghead.io/lessons/github-automatically-squash-commits-on-github-when-merging-pull-requests)
 * ✅ Delete head branches once pull request is merged
+* Settings > Actions > Workflow Permissions
+	* Read and write permissions
+	* Allow GitHub Actions to create and approve pull requests
 
 ## Permanent Trunks 🛤️
 * `master` -> Latest and greatest Dev Tested Code
