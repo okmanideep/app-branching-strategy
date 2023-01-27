@@ -1,1 +1,7 @@
+Sample file that acts as the only source of version in the repository
+
 version: 2301.27.3+169
+
+The above versioning format of `${version_name}+${build_number}` is used by flutter in pubspec.yaml
+For native apps, the file and the format will be different, and `version.rb` script has to be modified
+for the automated workflows to continue working like they are with the above format
