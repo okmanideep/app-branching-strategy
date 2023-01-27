@@ -20,4 +20,5 @@ jobs:
           VERSION: ${{ steps.version.outputs.VERSION }}
         run: |
           gh release create "v-$VERSION" --generate-notes
+          git push origin -d $GITHUB_REF # delete the release branch after release is created
 
