@@ -24,6 +24,8 @@ No other permanent trunks.
 
 `N` ➡️ patch number
 
+Ex: `2301.25.0`, `2302.01.4`
+
 ## Automated Workflows 🤖
 ### On PR merge to `master`
 🤖 [on-merge-master.yml](./.github/workflows/on-merge-master.yml)
