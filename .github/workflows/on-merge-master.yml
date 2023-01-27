@@ -8,7 +8,7 @@ on:
       - master
 
 env:
-  TZ: +05:30
+  TZ: +05:30 # Required for the Ruby script to pick the right date in version
 
 jobs:
   bump-version:
@@ -28,5 +28,5 @@ jobs:
     - name: Commit and push
       uses: stefanzweifel/git-auto-commit-action@v4
       with:
-        commit_message: "[Bot] Bump version - #${{ github.event.pull_request.number }}"
+        commit_message: "[Bot] Bump version after #${{ github.event.pull_request.number }}"
         branch: ${{ github.base_ref }}
