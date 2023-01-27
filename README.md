@@ -136,5 +136,7 @@ Create a release branch from latest master, with the right version in the branch
 Actions ▶️ > Prepare a release > Run workflow
 
 ### Tag Release
-Tag the latest commit in a release branch with the right version tag
+🤖 [create-tagged-release.yml](./.github/workflows/create-tagged-release.yml)
+Tag the latest commit in a release branch with the right version tag and release notes
 
+Actions ▶️ > Create Tagged Release > Run workflow (select the release branch)
