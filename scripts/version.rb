@@ -21,7 +21,7 @@ class Version
         "#{expected_version_without_patch}.0" # use the expected version with 0 patch number
       end
 
-    "version: #{modified_version_name}+#{modified_build_number}"
+    "version: #{modified_version_name}+#{modified_build_number}\n"
   end
 
   def version_name(exclude_patch)
@@ -37,7 +37,7 @@ end
 # Helper class to parse lines from a file that contains version line
 class Line
   # Regex to match the version string in the file
-  VERSION_REGEX = /version: (\d{2})(\d{2})\.(\d{2})\.(\d+)\+(\d+)/.freeze
+  VERSION_REGEX = /^version: (\d{2})(\d{2})\.(\d{2})\.(\d+)\+(\d+)\n$/.freeze
 
   def initialize(content)
     @content = content
