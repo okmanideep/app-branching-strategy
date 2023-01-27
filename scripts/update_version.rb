@@ -45,6 +45,6 @@ File.open(file_path, 'r') do |file|
 end
 
 File.open(file_path, 'w') do |file|
-  file.write(contents.join("\n"))
+  file.write(contents.join(''))
   file.close
 end
