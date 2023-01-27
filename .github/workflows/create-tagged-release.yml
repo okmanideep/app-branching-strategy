@@ -21,7 +21,7 @@ jobs:
         run: |
           gh release create "v-$VERSION" --generate-notes
       - name: Delete branch
-        if: ${{ github.ref != 'master' }} # To not delete master ever 😉
+        if: github.ref != 'refs/heads/master'
         run: |
           git push origin -d $GITHUB_REF # delete the release branch after release is created
 
