@@ -168,26 +168,27 @@ gantt
 
 	section Dev 1
 	Feature 2 ⭐ :a, 2022-01-13, 15d
-	Merge to master: milestone, after a, 0d
+	Merge to master: crit, milestone, after a, 0d
 
 	section Dev 2
 	Feature 1 ⭐ :b, 2022-01-12, 2d
 	Merge to master: milestone, after b, 0d
 	Library Upgrade ⬆️ : l, 2022-01-16, 1d
-	Merge to master: milestone, after l, 0d
+	Merge to master :crit, milestone, after l, 0d
 	Fix Feature 1 🪲: b2, after r1, 2d
 	Merge to release: milestone, after b2, 0d
 	Framework Upgrade ⬆️ : f, 2022-01-22, 1d
-	Merge to master: milestone, after f, 0d
+	Merge to master :crit, milestone, after f, 0d
 
 	section Release
 	Prepare Release 2201.14: milestone, after b, 0d
 	Testing Feature 1 ⭐: r1, after b, 4d
 	Testing Feature 1 ⭐: r2, after b2, 1d
 	Rollout 2201.14.1 10% - 100%: r3, after r2, 7d
-	Prepare new Release...: milestone, 2022-01-31, 0d
+	Prepare Release 2201.31: milestone, 2022-01-31, 0d
 	
 ```
+> Merging to master 🟥 is safe and encouraged even when a release is ongoing
 
 ## Why use a date based versioning scheme?
 It's a date based versioning scheme that is also
