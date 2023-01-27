@@ -149,16 +149,16 @@ gitGraph
 ## Why only squash merging?
 Linear history is desirable for various reasons. All boil down to simplicity again.
 
-Only allowing squash merging with a single trunk is the simplest way to achieve this. No one has to think, the right thing happens automatically.
+Only allowing squash merging with a single trunk is the simplest way to achieve linear history. No one has to think, the right thing happens automatically.
 
-Also in general, people have better discipline with respect to PR titles than commit messages, so your change logs also look good.
+Also in general, people have better discipline with respect to PR titles than commit messages, so your change-logs also look good.
 
 ## Why have release branches at all?
 Unlike server apps, mobile app release processes tend to be long. It's common to take **2 or more weeks** if we include the gradual roll out to 10% > 20% > 50% > 100% while observing stability and metrics along the way.
 
 Meanwhile, contributors should **NOT** have ambiguity of whether it is safe to merge to master right now. 
 
-But once the release is made and the commit is tagged, they don't have any purpose. That's why we delete them after release.
+Once the release is made and the commit is tagged, they don't have any purpose. That's why we delete them after release.
 
 ```mermaid
 gantt
