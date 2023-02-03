@@ -203,4 +203,3 @@ And best of all avoids the question - **When did we release this version?** fore
 Even if answering the above question is not that important for your team, it's equally good, if not better than `semver`. Which, most teams use by default. Semantic Versioning (`semver`) makes sense for libraries. Consumers of your library want to know when there are breaking changes and when there aren't. And package managers take advantage of this convention to safely upgrade dependencies. Mobile App Users / App Stores have no such expectations from App Versions. They barely care.
 
 My teams have been using date based versioning schemes for more than a year and it's great!
-
