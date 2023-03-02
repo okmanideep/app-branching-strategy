@@ -23,11 +23,11 @@ No other permanent trunks.
 * `auto-backmerge/<pr_number>` Used to raise PRs to master for every change pushed to release branches
 
 ## Versioning Scheme 🏷️
-`YYMM.DD.N`
+`YYMM.DD.NN`
 
-`N` ➡️ patch number
+`NN` ➡️ patch number
 
-Ex: `2301.25.0`, `2302.01.4`
+Ex: `2301.25.00`, `2302.01.04`
 
 ## Automated Workflows 🤖
 ### On PR merge to `master`
@@ -35,9 +35,9 @@ Ex: `2301.25.0`, `2302.01.4`
 On every merge to master we update the full version. Major, minor versions will be modified if the existing version is of a previous date, otherwise only the patch number will be increased.
 
 **Example**:  
-Existing Version: `2301.25.2`  
-If a new commit is pushed on 25th Jan, 2023, the version becomes `2301.25.3`  
-If a new commit is pushed on 26th Jan, 2023, the version becomes `2301.26.0`  
+Existing Version: `2301.25.02`  
+If a new commit is pushed on 25th Jan, 2023, the version becomes `2301.25.03`  
+If a new commit is pushed on 26th Jan, 2023, the version becomes `2301.26.00`  
 
 ### On PR merge to `release/**`
 🤖 [on-merge-release.yml](./.github/workflows/on-merge-release.yml)
@@ -68,7 +68,7 @@ Actions ▶️ > Create Tagged Release > Run workflow (select the release branch
 %%{init: { 'gitGraph': {'mainBranchName': 'master', 'showCommitLabel': true}} }%%
 
 gitGraph
-	commit id: "🤖 2301.25.0"
+	commit id: "🤖 2301.25.00"
 	branch fix/frames-bug
 	commit id: "Fix Logic"
 	commit id: "Fix UI"
@@ -78,13 +78,13 @@ gitGraph
 	commit id: "Add Socket"
 	checkout master
 	merge fix/frames-bug id: "PR: Frames Bug"
-	commit id: "🤖 2301.25.1"
+	commit id: "🤖 2301.25.01"
 	checkout feature/dm
 	merge master id: "Pull master"
 	commit id: "Add UI"
 	checkout master
 	merge feature/dm id: "PR: Feature DM"
-	commit id: "🤖 2301.25.2"
+	commit id: "🤖 2301.25.02"
 ```
 
 ## Releases ⛳
@@ -98,11 +98,11 @@ gitGraph
 %%{init: { 'gitGraph': {'mainBranchName': 'master', 'showCommitLabel': true}} }%%
 
 gitGraph
-	commit id: "🤖 2301.25.2"
+	commit id: "🤖 2301.25.02"
 	branch release/v-2301.25
 	checkout master
 	commit id: "PR: New Feature" type:HIGHLIGHT
-	commit id: "🤖 2301.26.0"
+	commit id: "🤖 2301.26.00"
 	checkout release/v-2301.25
 	branch fix/release-bug
 	commit id: "Fix bug"
@@ -112,11 +112,11 @@ gitGraph
 	branch auto-backmerge/release-bug
 	merge master id: "Update branch"
 	checkout release/v-2301.25
-	commit id: "🤖 2301.25.3" tag: "v-2301.25.3"
+	commit id: "🤖 2301.25.03" tag: "v-2301.25.03"
 	checkout master
 	merge auto-backmerge/release-bug id: "backmerge"
 	checkout master
-	commit id: "🤖 2301.26.1"
+	commit id: "🤖 2301.26.01"
 ```
 
 ### Making the release 🏌️
@@ -125,8 +125,8 @@ Actions ▶️ > Create Tagged Release > Run Workflow (select release branch)
 Once we are 🟢 on all tests, do the above to tag the latest commit from the release branch and create a Github release with automated release notes. And upload the artifacts to the App Stores
 
 ### Hotfix 🧯
-Fixing an issue in current production build (`v-2301.16.1`)
-1. Create a branch from the release tag (tag: `v-2301.16.1` -> branch: `release/v-2301.16`)
+Fixing an issue in current production build (`v-2301.16.01`)
+1. Create a branch from the release tag (tag: `v-2301.16.01` -> branch: `release/v-2301.16`)
 
 The rest is same as normal release flow
 
@@ -134,17 +134,17 @@ The rest is same as normal release flow
 %%{init: { 'gitGraph': {'mainBranchName': 'release/v-2301.16', 'showCommitLabel': true}} }%%
 
 gitGraph
-	commit id: "2301.16.4" tag: "v-2301.16.4"
+	commit id: "2301.16.04" tag: "v-2301.16.04"
 	branch hotfix/crash
 	commit id: "Fix crash"
 	checkout release/v-2301.16
 	merge hotfix/crash id: "PR Crash"
-	commit id: "🤖 2301.16.5"
+	commit id: "🤖 2301.16.05"
 	branch hotfix/bug
 	commit id: "Fix bug"
 	checkout release/v-2301.16
 	merge hotfix/bug id: "PR Bug"
-	commit id: "🤖 2301.16.6" tag: "v-2301.16.6"
+	commit id: "🤖 2301.16.06" tag: "v-2301.16.06"
 
 ```
 
@@ -196,7 +196,7 @@ gantt
 ## Why use a date based versioning scheme?
 It's a date based versioning scheme that is also
 * compatible with `semver` comparisons for which version is greater than the other
-* compatible with string alphabetical order comparisons ( `2301.16.0` > `2212.31.7` )
+* compatible with string alphabetical order comparisons ( `2301.16.00` > `2212.31.07` )
 
 And best of all avoids the question - **When did we release this version?** forever, from anyone in the whole team
 
