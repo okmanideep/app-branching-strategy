@@ -4,3 +4,7 @@ Metrics/MethodLength:
   Max: 100
 Metrics/AbcSize:
   Enabled: false
+Style/OptionalBooleanParameter:
+  Enabled: false
+Style/RaiseArgs:
+  Enabled: false
