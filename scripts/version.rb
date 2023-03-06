@@ -2,7 +2,7 @@ class Version
   def initialize(match)
     @major = match[1]
     @minor = match[2]
-    @patch = Integer(match[3])
+    @patch = match[3].to_i
   end
 
   def updated_version_line(only_patch)
