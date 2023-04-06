@@ -38,13 +38,13 @@ jobs:
         run: |
           git switch -c "auto-backmerge/$PR_NUMBER"
           git fetch origin $COMMIT_TO_BACKMERGE
-          git cherry-pick $COMMIT_TO_BACKMERGE # might fail if conflicts are present
+          git -c user.email=praja-ci@praja.buzz -c user.name=praja-ci cherry-pick $COMMIT_TO_BACKMERGE # might fail if conflicts are present
           git push origin HEAD
           gh pr create --title "Backmerge #$PR_NUMBER: $PR_TITLE" --body "Backmerge from $BASE_BRANCH to master" --base master
           gh pr merge --auto --squash
 
   raise-backmerge-pr-from-base-branch:
-    if: ${{ needs.raise-backmerge-pr-using-cherry-pick.result == 'failure' }}
+    if: ${{ always() && needs.raise-backmerge-pr-using-cherry-pick.result == 'failure' }}
     needs: raise-backmerge-pr-using-cherry-pick
     runs-on: ubuntu-latest
     steps:
