@@ -14,8 +14,38 @@ env:
   GH_TOKEN: ${{ github.token }}
 
 jobs:
-  raise-backmerge-pr-and-bump-version:
+  bump-version:
     if: github.event.pull_request.merged == true
+    secrets: inherit
+    uses: ./.github/workflows/update-version.yml
+    with:
+      branch: ${{ github.base_ref }}
+      commit_message: "[Bot] Bump version after #${{ github.event.pull_request.number }}"
+      flags: '--only-patch'
+
+  raise-backmerge-pr-using-cherry-pick:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          ref: master
+
+      - name: Cherry Pick
+        env:
+          COMMIT_TO_BACKMERGE: ${{ github.sha }}
+        run: |
+          git switch -c "auto-backmerge/$PR_NUMBER"
+          git fetch origin $COMMIT_TO_BACKMERGE
+          git cherry-pick $COMMIT_TO_BACKMERGE # might fail if conflicts are present
+          git push origin HEAD
+          gh pr create --title "Backmerge #$PR_NUMBER: $PR_TITLE" --body "Backmerge from $BASE_BRANCH to master" --base master
+          gh pr merge --auto --squash
+
+  raise-backmerge-pr-from-base-branch:
+    if: ${{ needs.raise-backmerge-pr-using-cherry-pick.result == 'failure' }}
+    needs: raise-backmerge-pr-using-cherry-pick
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -29,17 +59,15 @@ jobs:
           git push origin HEAD
           gh pr create --title "Backmerge #$PR_NUMBER: $PR_TITLE" --body "Backmerge from $BASE_BRANCH to master" --base master
           gh pr merge --auto --squash
-
       - name: Checkout to release branch
         run: |
           git switch $BASE_BRANCH
-
       - name: Run Update Version Script
         run: |
           ruby scripts/update_version.rb ./version.txt --only-patch
-
       - name: Commit and push
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: "[Bot] Bump version after #${{ github.event.pull_request.number }}"
           branch: ${{ github.base_ref }}
+
