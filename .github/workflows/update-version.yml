@@ -1,0 +1,37 @@
+name: Update Version
+on:
+  workflow_call:
+    inputs:
+      branch:
+        type: string
+        required: true
+        description: 'Where to update the version'
+      commit_message:
+        type: string
+        required: true
+      flags:
+        type: string
+        default: ''
+        description: 'Flags to update only the patch number etc'
+
+env:
+  TZ: +05:30 # Required for the Ruby Script to pick the right date in version
+
+jobs:
+  update-version:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ inputs.branch }}
+      - name: Update Version
+        env:
+          FLAGS: ${{ inputs.flags }}
+        run: |
+          ruby scripts/update_version.rb ./version.txt $FLAGS
+      - name: Commit and push
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: ${{ inputs.commit_message }}
+          branch: ${{ inputs.branch }}

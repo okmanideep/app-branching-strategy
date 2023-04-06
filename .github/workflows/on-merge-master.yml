@@ -1,4 +1,4 @@
-name: Update version on merge to master
+name: On PR Merge to master
 
 on:
   pull_request:
@@ -13,20 +13,8 @@ env:
 jobs:
   bump-version:
     if: github.event.pull_request.merged == true
-    runs-on: ubuntu-latest
-
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
-      with:
-        ref: ${{ github.base_ref }}
-
-    - name: Run Update Version Script
-      run: |
-        ruby scripts/update_version.rb ./version.txt
-
-    - name: Commit and push
-      uses: stefanzweifel/git-auto-commit-action@v4
-      with:
-        commit_message: "[Bot] Bump version after #${{ github.event.pull_request.number }}"
-        branch: ${{ github.base_ref }}
+    secrets: inherit
+    uses: ./.github/workflows/update-version.yml
+    with:
+      branch: ${{ github.base_ref }}
+      commit_message: "[Bot] Bump version after #${{ github.event.pull_request.number }}"
